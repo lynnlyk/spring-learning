@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- services -->
+
+    <bean id="movieFinder" class="com.lynnlyk.spring.core.ioc.di.constructor_based.MovieFinder"/>
+
+    <!-- more bean definitions for services go here -->
+
+    <bean id="simpleMovieLister" class="com.lynnlyk.spring.core.ioc.di.constructor_based.SimpleMovieLister">
+        <constructor-arg ref="movieFinder"/>
+    </bean>
+
+
+    <bean id="foo" class="com.lynnlyk.spring.core.ioc.di.constructor_based.Foo">
+        <constructor-arg ref="bar"/>
+        <constructor-arg ref="baz"/>
+    </bean>
+
+    <bean id="bar" class="com.lynnlyk.spring.core.ioc.di.constructor_based.Bar"/>
+
+    <bean id="baz" class="com.lynnlyk.spring.core.ioc.di.constructor_based.Baz"/>
+
+
+    <bean id="exampleBean1" class="com.lynnlyk.spring.core.ioc.di.constructor_based.ExampleBean">
+        <constructor-arg type="int" value="7500000"/>
+        <constructor-arg type="java.lang.String" value="42"/>
+    </bean>
+
+    <bean id="exampleBean2" class="com.lynnlyk.spring.core.ioc.di.constructor_based.ExampleBean">
+        <constructor-arg index="0" value="7500000"/>
+        <constructor-arg index="1" value="42"/>
+    </bean>
+
+    <bean id="exampleBean3" class="com.lynnlyk.spring.core.ioc.di.constructor_based.ExampleBean">
+        <constructor-arg name="years" value="7500000"/>
+        <constructor-arg name="ultimateAnswer" value="42"/>
+    </bean>
+
+
+</beans>
