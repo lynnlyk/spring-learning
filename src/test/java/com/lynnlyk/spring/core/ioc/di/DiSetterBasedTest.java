@@ -1,14 +1,12 @@
 package com.lynnlyk.spring.core.ioc.di;
 
-import com.lynnlyk.spring.core.ioc.di.constructor_based.ExampleBean;
-import com.lynnlyk.spring.core.ioc.di.constructor_based.Foo;
-import com.lynnlyk.spring.core.ioc.di.constructor_based.SimpleMovieLister;
+import com.lynnlyk.spring.core.ioc.di.setter_based.ExampleBean;
+import com.lynnlyk.spring.core.ioc.di.setter_based.SimpleMovieLister;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
@@ -17,13 +15,13 @@ import static org.junit.Assert.assertSame;
  * @author: lynnlyk
  * @create: 2018-06-08
  */
-public class DiConstructorBasedTest {
+public class DiSetterBasedTest {
 
     private ApplicationContext context;
 
     @Before
     public void init() {
-        context = new ClassPathXmlApplicationContext("classpath:ioc/di/constructor_based_di.xml");
+        context = new ClassPathXmlApplicationContext("classpath:ioc/di/setter_based_di.xml");
     }
 
     @Test
@@ -35,19 +33,10 @@ public class DiConstructorBasedTest {
     }
 
     @Test
-    public void fooTest() {
-        Foo foo = context.getBean("foo", Foo.class);
-        assertNotNull(foo);
+    public void exampleBeanTest() {
+        ExampleBean exampleBean = context.getBean("exampleBean", ExampleBean.class);
+        assertNotNull(exampleBean);
     }
 
-    @Test
-    public void exampleTest() {
-        ExampleBean exampleBean1 = context.getBean("exampleBean1", ExampleBean.class);
-        ExampleBean exampleBean2 = context.getBean("exampleBean2", ExampleBean.class);
-        ExampleBean exampleBean3 = context.getBean("exampleBean3", ExampleBean.class);
-        assertNotNull(exampleBean1);
-        assertNotNull(exampleBean2);
-        assertNotNull(exampleBean3);
-    }
 
 }

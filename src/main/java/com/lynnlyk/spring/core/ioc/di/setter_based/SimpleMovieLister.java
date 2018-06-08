@@ -1,18 +1,18 @@
-package com.lynnlyk.spring.core.ioc.di.constructor_based;
+package com.lynnlyk.spring.core.ioc.di.setter_based;
 
 public class SimpleMovieLister {
 
-    // the SimpleMovieLister has a dependency on a MovieFinder
+    // the SimpleMovieLister has a dependency on the MovieFinder
     private MovieFinder movieFinder;
 
-    // a constructor so that the Spring container can inject a MovieFinder
-    public SimpleMovieLister(MovieFinder movieFinder) {
+    // a setter method so that the Spring container can inject a MovieFinder
+    public void setMovieFinder(MovieFinder movieFinder) {
         this.movieFinder = movieFinder;
     }
-
-    // business logic that actually uses the injected MovieFinder is omitted...
-
     public MovieFinder getMovieFinder() {
         return movieFinder;
     }
+
+
+    // business logic that actually uses the injected MovieFinder is omitted...
 }

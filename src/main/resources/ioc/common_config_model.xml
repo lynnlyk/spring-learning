@@ -1,41 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- constructor based DI-->
+    <bean id="exampleBean" class="examples.ExampleBean">
+        <!-- constructor injection using the nested ref element -->
+        <constructor-arg>
+            <ref bean="anotherExampleBean"/>
+        </constructor-arg>
 
-    <bean id="movieFinder" class="com.lynnlyk.spring.core.ioc.di.constructor_based.MovieFinder"/>
+        <!-- constructor injection using the neater ref attribute -->
+        <constructor-arg ref="yetAnotherBean"/>
 
-    <bean id="simpleMovieLister" class="com.lynnlyk.spring.core.ioc.di.constructor_based.SimpleMovieLister">
-        <constructor-arg ref="movieFinder"/>
+        <constructor-arg type="int" value="1"/>
     </bean>
 
+    <bean id="anotherExampleBean" class="examples.AnotherBean"/>
+    <bean id="yetAnotherBean" class="examples.YetAnotherBean"/>
 
-    <bean id="foo" class="com.lynnlyk.spring.core.ioc.di.constructor_based.Foo">
-        <constructor-arg ref="bar"/>
-        <constructor-arg ref="baz"/>
+
+    <!-- static factory method DI-->
+    <bean id="exampleBean" class="examples.ExampleBean" factory-method="createInstance">
+        <constructor-arg ref="anotherExampleBean"/>
+        <constructor-arg ref="yetAnotherBean"/>
+        <constructor-arg value="1"/>
     </bean>
 
-    <bean id="bar" class="com.lynnlyk.spring.core.ioc.di.constructor_based.Bar"/>
+    <bean id="anotherExampleBean" class="examples.AnotherBean"/>
+    <bean id="yetAnotherBean" class="examples.YetAnotherBean"/>
 
-    <bean id="baz" class="com.lynnlyk.spring.core.ioc.di.constructor_based.Baz"/>
 
-
-    <bean id="exampleBean1" class="com.lynnlyk.spring.core.ioc.di.constructor_based.ExampleBean">
-        <constructor-arg type="int" value="7500000"/>
-        <constructor-arg type="java.lang.String" value="42"/>
+    <!-- Straight values (primitives, Strings, and so on)-->
+    <!-- 1.value attribute-->
+    <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <!-- results in a setDriverClassName(String) call -->
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/mydb"/>
+        <property name="username" value="root"/>
+        <property name="password" value="masterkaoli"/>
     </bean>
 
-    <bean id="exampleBean2" class="com.lynnlyk.spring.core.ioc.di.constructor_based.ExampleBean">
-        <constructor-arg index="0" value="7500000"/>
-        <constructor-arg index="1" value="42"/>
+    <!-- 2.uses the p-namespace-->
+    <bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close"
+          p:driverClassName="com.mysql.jdbc.Driver"
+          p:url="jdbc:mysql://localhost:3306/mydb"
+          p:username="root"
+          p:password="masterkaoli"/>
+
+    <!-- 3.configure a java.util.Properties instance-->
+    <bean id="mappings"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+
+        <!-- typed as a java.util.Properties -->
+        <property name="properties">
+            <value>
+                jdbc.driver.className=com.mysql.jdbc.Driver
+                jdbc.url=jdbc:mysql://localhost:3306/mydb
+            </value>
+        </property>
     </bean>
 
-    <bean id="exampleBean3" class="com.lynnlyk.spring.core.ioc.di.constructor_based.ExampleBean">
-        <constructor-arg name="years" value="7500000"/>
-        <constructor-arg name="ultimateAnswer" value="42"/>
+    <!-- 4.The idref element-->
+    <bean id="theTargetBean" class="..."/>
+    <bean id="theClientBean" class="...">
+        <property name="targetName">
+            <idref bean="theTargetBean"/>
+        </property>
     </bean>
 
+    <!-- 5.The 4th bean definition snippet is exactly equivalent (at runtime) to the following snippet.
+        But the 4th is preferable.
+    -->
+    <bean id="theTargetBean" class="..." />
+    <bean id="client" class="...">
+        <property name="targetName" value="theTargetBean"/>
+    </bean>
 
 </beans>

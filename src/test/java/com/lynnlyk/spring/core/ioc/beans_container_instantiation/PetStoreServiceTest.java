@@ -21,9 +21,8 @@ public class PetStoreServiceTest {
         *  最简依赖：core, context, beans, aop, expression, jcl
         *  注意路径写法
         * */
-        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/services.xml", "ioc/beans_container_instantiation/daos.xml");
+        ApplicationContext context = new ClassPathXmlApplicationContext("classpath:ioc/beans_container_instantiation/services.xml", "ioc/beans_container_instantiation/daos.xml");
         PetStoreService petStoreServiceImpl = context.getBean("petStore", PetStoreServiceImpl.class);
-        System.out.println(petStoreServiceImpl);
         assertNotNull(petStoreServiceImpl);
 
     }
@@ -31,7 +30,7 @@ public class PetStoreServiceTest {
     @Test
     public void petStoreServiceTestByGenericApplicationContext() {
         GenericApplicationContext context = new GenericApplicationContext();
-        new XmlBeanDefinitionReader(context).loadBeanDefinitions("/ioc/beans_container_instantiation/services.xml", "classpath:/ioc/daos.xml");
+        new XmlBeanDefinitionReader(context).loadBeanDefinitions("/ioc/beans_container_instantiation/services.xml", "classpath:/ioc/beans_container_instantiation/daos.xml");
         //  注意调用 context.refresh()，否则会报如下错误：
         // java.lang.IllegalStateException: org.springframework.context.support.GenericApplicationContext@5d3411d has not been refreshed yet
         context.refresh();

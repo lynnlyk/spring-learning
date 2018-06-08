@@ -1,4 +1,4 @@
-package com.lynnlyk.spring.core.ioc.di.constructor_based;
+package com.lynnlyk.spring.core.ioc.di.setter_based;
 
 /**
  * @description: DESCRIPTION
@@ -7,14 +7,21 @@ package com.lynnlyk.spring.core.ioc.di.constructor_based;
  */
 public class ExampleBean {
 
-    // Number of years to calculate the Ultimate Answer
-    private int years;
+    private AnotherBean beanOne;
 
-    // The Answer to Life, the Universe, and Everything
-    private String ultimateAnswer;
+    private YetAnotherBean beanTwo;
 
-    public ExampleBean(int years, String ultimateAnswer) {
-        this.years = years;
-        this.ultimateAnswer = ultimateAnswer;
+    private int i;
+
+    public void setBeanOne(AnotherBean beanOne) {
+        this.beanOne = beanOne;
+    }
+
+    public void setBeanTwo(YetAnotherBean beanTwo) {
+        this.beanTwo = beanTwo;
+    }
+
+    public void setIntegerProperty(int i) {
+        this.i = i;
     }
 }

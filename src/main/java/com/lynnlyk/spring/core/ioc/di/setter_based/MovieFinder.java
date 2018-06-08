@@ -1,4 +1,4 @@
-package com.lynnlyk.spring.core.ioc.di.constructor_based;
+package com.lynnlyk.spring.core.ioc.di.setter_based;
 
 /**
  * @description:

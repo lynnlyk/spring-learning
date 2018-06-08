@@ -11,4 +11,8 @@ public class SimpleMovieLister {
     }
 
     // business logic that actually uses the injected MovieFinder is omitted...
+
+    public MovieFinder getMovieFinder() {
+        return movieFinder;
+    }
 }
